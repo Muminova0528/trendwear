@@ -42,4 +42,21 @@ RUN echo '#!/bin/sh' > /start.sh && \
 
 EXPOSE 80
 
-CMD ["/start.sh"]
+CMD ["/start.sh"]# Root papkada Dockerfile yaratish
+cat > Dockerfile << 'EOF'
+# Root Dockerfile - CI/CD placeholder
+FROM alpine:latest
+
+LABEL maintainer="TrendWear Team"
+LABEL description="Use 'docker-compose up' to run the full application stack"
+
+RUN echo "✅ Docker build successful for TrendWear"
+
+CMD ["sh", "-c", "echo 'Please use docker-compose up to run the application' && tail -f /dev/null"]
+EOF
+
+# Build qilish
+docker build -t trendwear .
+
+# Test qilish
+docker run --rm trendwear
