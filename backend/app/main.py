@@ -26,8 +26,8 @@ for attempt in range(10):
         time.sleep(3)
 
 app = FastAPI(
-    title="TrendWear Distribution — Bulutli Boshqaruv Platformasi",
-    description="ERP + CRM + WMS yagona bulutli tizimi (BTEC Unit 6)",
+    title="TrendWear Distribution — Boshqaruv Platformasi",
+    description="ERP + CRM + WMS yagona tizimi (BTEC Unit 6)",
     version="1.0.0",
     docs_url="/api/docs",
     openapi_url="/api/openapi.json",

@@ -1,4 +1,4 @@
-// TrendWear bulutli boshqaruv platformasi — frontend SPA
+// TrendWear boshqaruv platformasi — frontend SPA
 // Backend manzili: nginx orqali "/api" yo'liga proxy qilinadi (bitta serverda).
 const API = "/api";
 
@@ -39,10 +39,10 @@ function renderLogin() {
   root.innerHTML = `
   <div class="login-wrap">
     <div class="login-art">
-      <div class="brand-mark"><span class="brand-dot"></span> TrendWear<span style="color:var(--muted);font-weight:400"> Cloud</span></div>
+      <div class="brand-mark"><span class="brand-dot"></span> TrendWear</div>
       <div>
-        <div class="login-headline serif">Ulgurji savdoning<br><em>bulutli</em> markazi.</div>
-        <p class="login-sub">ERP, CRM va WMS tizimlari yagona xavfsiz tarmoq ichida birlashtirilgan. VPC arxitekturasi, load balancing va auto-scaling bilan jihozlangan zamonaviy platforma.</p>
+        <div class="login-headline serif">Ulgurji savdoning<br><em>markazi</em>.</div>
+        <p class="login-sub">ERP, CRM va WMS tizimlari birlashtirilgan zamonaviy platforma.</p>
       </div>
       <div class="login-tags">
         <span class="tag-pill">VPC izolyatsiya</span>
@@ -58,18 +58,15 @@ function renderLogin() {
         <p class="lead">Boshqaruv paneliga kirish uchun tizimga ulaning.</p>
         <div class="field">
           <label>Email</label>
-          <input id="email" type="email" value="admin@trendwear.uz" placeholder="email@trendwear.uz" />
+          <input id="email" type="email" placeholder="email@trendwear.uz" />
         </div>
         <div class="field">
           <label>Parol</label>
-          <input id="password" type="password" value="admin123" placeholder="••••••••" />
+          <input id="password" type="password" placeholder="••••••••" />
         </div>
         <button class="btn-primary" id="loginBtn">Tizimga kirish</button>
         <div class="error-msg" id="loginErr"></div>
-        <div class="demo-hint">
-          Demo hisob: <b>admin@trendwear.uz</b> / <b>admin123</b><br>
-          yoki <b>manager@trendwear.uz</b> / <b>manager123</b>
-        </div>
+        <div class="demo-hint">Demo hisoblar: <b>admin@trendwear.uz</b>, <b>manager@trendwear.uz</b></div>
       </div>
     </div>
   </div>`;
@@ -152,7 +149,7 @@ function money(n) { return fmt(Math.round(n)) + " so'm"; }
 // ============ DASHBOARD ============
 async function pageDashboard() {
   const m = document.getElementById("main");
-  m.innerHTML = pageHead("Boshqaruv paneli", "TrendWear Cloud · Umumiy ko'rinish",
+  m.innerHTML = pageHead("Boshqaruv paneli", "TrendWear · Umumiy ko'rinish",
     `<span class="node-badge" id="nodeBadge"><span class="pulse"></span> ulanmoqda...</span>`);
   try {
     const [s, health] = await Promise.all([api("/dashboard"), api("/health")]);
