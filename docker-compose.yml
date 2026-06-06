@@ -1,0 +1,75 @@
+# =====================================================================
+#  TrendWear Distribution — Bulutli Boshqaruv Platformasi
+#  Docker Compose orqali uch qatlamli (3-tier) VPC arxitekturasi taqlidi:
+#
+#    [ Public Subnet ]   frontend (nginx)  — load balancer + statik UI
+#           │
+#    [ App Subnet ]      backend (FastAPI)  — 2 replica (auto-scaling taqlidi)
+#           │
+#    [ Private Subnet ]  db (PostgreSQL)    — faqat ichki tarmoqdan ko'rinadi
+#
+#  Faqat frontend tashqi internetga ochiq (80-port). Backend va DB
+#  izolyatsiyalangan ichki tarmoqlarda joylashgan (VPC subnetlari).
+# =====================================================================
+
+services:
+  # ---------- PRIVATE SUBNET: ma'lumotlar bazasi ----------
+  db:
+    image: postgres:16-alpine
+    container_name: trendwear_db
+    environment:
+      POSTGRES_USER: trendwear
+      POSTGRES_PASSWORD: trendwear_pass
+      POSTGRES_DB: trendwear_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - private_subnet     # faqat ichki — internetga chiqmaydi
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U trendwear -d trendwear_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  # ---------- APP SUBNET: backend (auto-scaling uchun replicalanadi) ----------
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql://trendwear:trendwear_pass@db:5432/trendwear_db
+      SECRET_KEY: change_this_in_production_please
+      # SERVER_ID avtomatik tarzda har bir konteynerning hostname'i bo'ladi
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - private_subnet     # DB bilan gaplashadi
+      - app_subnet         # frontend bilan gaplashadi
+    deploy:
+      replicas: 2          # 2 ta nusxa = load balancing namoyishi uchun
+    restart: unless-stopped
+    # Tashqi port ochilmaydi — faqat nginx orqali kiriladi (xavfsizlik)
+
+  # ---------- PUBLIC SUBNET: frontend + load balancer ----------
+  frontend:
+    build: ./frontend
+    container_name: trendwear_frontend
+    ports:
+      - "80:80"            # yagona tashqi kirish nuqtasi (Internet Gateway)
+    depends_on:
+      - backend
+    networks:
+      - app_subnet
+    restart: unless-stopped
+
+networks:
+  # Public/App qatlam — frontend ↔ backend
+  app_subnet:
+    driver: bridge
+  # Private qatlam — backend ↔ db (DB bu yerda izolyatsiya qilingan)
+  private_subnet:
+    driver: bridge
+    internal: true         # internetga umuman chiqolmaydi (private subnet)
+
+volumes:
+  pgdata:
