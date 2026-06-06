@@ -1,8 +1,11 @@
 import time
 import socket
+import os
 
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 
@@ -268,3 +271,23 @@ def update_order_status(order_id: int, payload: schemas.OrderStatusUpdate,
     db.commit()
     db.refresh(order)
     return order
+
+
+# ============ STATIC FRONTEND (Render single-service deploy) ============
+# Agar frontend fayllari mavjud bo'lsa, FastAPI ularni ham xizmat qiladi.
+# Shunda Render'da bitta web-service hammasini (UI + API) ishlatadi.
+_STATIC_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "static")
+if os.path.isdir(_STATIC_DIR):
+    app.mount("/assets", StaticFiles(directory=_STATIC_DIR), name="assets")
+
+    @app.get("/", include_in_schema=False)
+    def serve_index():
+        return FileResponse(os.path.join(_STATIC_DIR, "index.html"))
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    def serve_spa(full_path: str):
+        # API yo'llari yuqorida hal qilingan; qolgan hammasi SPA'ga ketadi.
+        candidate = os.path.join(_STATIC_DIR, full_path)
+        if full_path and os.path.isfile(candidate):
+            return FileResponse(candidate)
+        return FileResponse(os.path.join(_STATIC_DIR, "index.html"))

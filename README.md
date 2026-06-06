@@ -120,6 +120,47 @@ Domen ulash uchun DNS A-yozuvini server IP'ga yo'naltiring.
 
 ---
 
+## Render.com'ga deploy qilish (eng oson yo'l)
+
+> **Muhim:** Render `docker-compose`ni ishlatmaydi. Shuning uchun bu loyiha
+> Render uchun moslashtirildi — frontend UI va backend API **bitta web-service**
+> ichida birlashtirildi, PostgreSQL esa Render'ning boshqariladigan bazasi
+> sifatida alohida ishlaydi. Buni `render.yaml` (Blueprint) avtomatik bajaradi.
+
+### Qadamlar
+
+1. Loyihani GitHub'ga yuklang (push qiling).
+2. [render.com](https://render.com) → **New** → **Blueprint**.
+3. GitHub repozitoriyangizni ulang. Render `render.yaml` faylini avtomatik topadi.
+4. **Apply** bosing. Render quyidagilarni yaratadi:
+   - `trendwear-db` — PostgreSQL bazasi (bepul reja),
+   - `trendwear` — Docker web-service (FastAPI + SPA).
+5. `DATABASE_URL` va `SECRET_KEY` avtomatik ulanadi — qo'lda hech narsa kiritish shart emas.
+6. Deploy tugagach, Render bergan manzilni oching (masalan `https://trendwear.onrender.com`).
+
+### Demo hisoblar (Render'da ham ishlaydi)
+
+| Email | Parol |
+|-------|-------|
+| `admin@trendwear.uz` | `admin123` |
+| `manager@trendwear.uz` | `manager123` |
+
+> **Eslatma — load balancing:** Compose versiyasidagi 2 replica + nginx LB
+> namoyishi mahalliy/VPS uchun saqlanib qoldi (pastdagi bo'lim). Render'ning
+> bepul rejasi bitta instansiya beradi; ko'p instansiya uchun Render'da
+> servis sozlamalaridan **Scaling** ni oshiring (pullik reja). `/api/load-test`
+> va `/api/health` endpointlari Render'da ham ishlaydi.
+
+### Lokal vs Render — qaysi fayl nima uchun
+
+| Fayl | Maqsad |
+|------|--------|
+| `docker-compose.yml` | Lokal / VPS — to'liq 3-tier arxitektura, nginx LB, 2 replica |
+| `render.yaml` | Render — bitta web-service + boshqariladigan Postgres |
+| `backend/static/` | Frontend fayllari (Render'da FastAPI tomonidan xizmat qilinadi) |
+
+---
+
 ## Auto-scaling / Load Balancing namoyishi
 
 1. Saytga kiring → chap menyudan **"Yuklama testi"** ni tanlang.
