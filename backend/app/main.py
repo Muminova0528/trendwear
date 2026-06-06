@@ -276,7 +276,7 @@ def update_order_status(order_id: int, payload: schemas.OrderStatusUpdate,
 # ============ STATIC FRONTEND (Render single-service deploy) ============
 # Agar frontend fayllari mavjud bo'lsa, FastAPI ularni ham xizmat qiladi.
 # Shunda Render'da bitta web-service hammasini (UI + API) ishlatadi.
-_STATIC_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "static")
+_STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
 if os.path.isdir(_STATIC_DIR):
     app.mount("/assets", StaticFiles(directory=_STATIC_DIR), name="assets")
 
