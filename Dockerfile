@@ -9,9 +9,9 @@ COPY backend/ .
 
 FROM nginx:1.27-alpine
 
-# Backend uchun Python va kerakli paketlar
+# Backend uchun Python - Alpine 3.19 (eski versiya) ishlatamiz
 RUN apk add --no-cache python3 py3-pip && \
-    pip install --no-cache-dir uvicorn
+    python3 -m pip install --no-cache-dir --break-system-packages uvicorn
 
 WORKDIR /app
 
@@ -26,11 +26,4 @@ COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 10000
 
 # Backend va frontendni birga ishga tushirish
-RUN echo '#!/bin/sh\n\
-echo "Starting TrendWear application..."\n\
-echo "Backend: uvicorn on port 10000"\n\
-echo "Frontend: nginx on port 10000"\n\
-uvicorn app.main:app --host 0.0.0.0 --port 10000 &\n\
-nginx -g "daemon off;"' > /start.sh && chmod +x /start.sh
-
-CMD ["/start.sh"]
+CMD sh -c "python3 -m uvicorn app.main:app --host 0.0.0.0 --port 10000 & nginx -g 'daemon off;'"
