@@ -1,4 +1,4 @@
-// TrendWear bulutli boshqaruv platformasi — frontend SPA
+// TrendWear boshqaruv platformasi — frontend SPA
 // Backend manzili: nginx orqali "/api" yo'liga proxy qilinadi (bitta serverda).
 const API = "/api";
 
@@ -39,9 +39,9 @@ function renderLogin() {
   root.innerHTML = `
   <div class="login-wrap">
     <div class="login-art">
-      <div class="brand-mark"><span class="brand-dot"></span> TrendWear<span style="color:var(--muted);font-weight:400"> Cloud</span></div>
+      <div class="brand-mark"><span class="brand-dot"></span> TrendWear</div>
       <div>
-        <div class="login-headline serif">Ulgurji savdoning<br><em>bulutli</em> markazi.</div>
+        <div class="login-headline serif">Ulgurji savdoning<br>markazi.</div>
         <p class="login-sub">ERP, CRM va WMS tizimlari yagona xavfsiz tarmoq ichida birlashtirilgan. VPC arxitekturasi, load balancing va auto-scaling bilan jihozlangan zamonaviy platforma.</p>
       </div>
       <div class="login-tags">
@@ -152,7 +152,7 @@ function money(n) { return fmt(Math.round(n)) + " so'm"; }
 // ============ DASHBOARD ============
 async function pageDashboard() {
   const m = document.getElementById("main");
-  m.innerHTML = pageHead("Boshqaruv paneli", "TrendWear Cloud · Umumiy ko'rinish",
+  m.innerHTML = pageHead("Boshqaruv paneli", "TrendWear · Umumiy ko'rinish",
     `<span class="node-badge" id="nodeBadge"><span class="pulse"></span> ulanmoqda...</span>`);
   try {
     const [s, health] = await Promise.all([api("/dashboard"), api("/health")]);
