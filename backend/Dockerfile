@@ -10,10 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY .env .
-COPY ./app ./app
+COPY . .
 
-EXPOSE 8000
-
-# Auto-scaling stsenariysida har bir konteyner mustaqil ishlaydi
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Render PORT environment variable dan foydalanish
+CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-10000}
