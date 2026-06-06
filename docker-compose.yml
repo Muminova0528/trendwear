@@ -18,15 +18,15 @@ services:
     image: postgres:16-alpine
     container_name: trendwear_db
     environment:
-      POSTGRES_USER: trendwear
-      POSTGRES_PASSWORD: trendwear_pass
-      POSTGRES_DB: trendwear_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
       - private_subnet     # faqat ichki — internetga chiqmaydi
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U trendwear -d trendwear_db"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -34,10 +34,9 @@ services:
 
   # ---------- APP SUBNET: backend (auto-scaling uchun replicalanadi) ----------
   backend:
-    build: ./backend
+    build: .
     environment:
-      DATABASE_URL: postgresql://trendwear:trendwear_pass@db:5432/trendwear_db
-      SECRET_KEY: change_this_in_production_please
+      DATABASE_URL: ${DATABASE_URL}
       # SERVER_ID avtomatik tarzda har bir konteynerning hostname'i bo'ladi
     depends_on:
       db:
