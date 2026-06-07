@@ -7,7 +7,7 @@ COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY backend/app ./app
-
+COPY common ./common
 COPY frontend ./app/static
 
 EXPOSE 8000
