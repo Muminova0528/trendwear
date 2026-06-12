@@ -114,7 +114,7 @@ function renderApp() {
   root.innerHTML = `
   <div class="shell">
     <aside class="sidebar">
-      <div class="brand-mark"><span class="brand-dot"></span> TrendWear</div>
+      <div class="brand-mark"><span class="brand-dot"></span> Distinction</div>
       ${NAV.map(n => `
         <button class="nav-item ${state.page === n.id ? "active" : ""}" data-nav="${n.id}">
           <span class="nav-ico">${ICO[n.ico]}</span> ${n.label}
@@ -149,7 +149,7 @@ function money(n) { return fmt(Math.round(n)) + " so'm"; }
 // ============ DASHBOARD ============
 async function pageDashboard() {
   const m = document.getElementById("main");
-  m.innerHTML = pageHead("Doston ustoz shu o'quvchingizga Distinction qo'ying", "TrendWear · Umumiy ko'rinish",
+  m.innerHTML = pageHead("Doston ustoz shu o'quvchingizga Distinction qo'ying", "Distinction · Umumiy ko'rinish",
     `<span class="node-badge" id="nodeBadge"><span class="pulse"></span> ulanmoqda...</span>`);
   try {
     const [s, health] = await Promise.all([api("/dashboard"), api("/health")]);
