@@ -1,4 +1,4 @@
-// TrendWear boshqaruv platformasi — frontend SPA
+// Distinction boshqaruv platformasi — frontend SPA
 // Backend manzili: nginx orqali "/api" yo'liga proxy qilinadi (bitta serverda).
 const API = "/api";
 
@@ -39,7 +39,7 @@ function renderLogin() {
   root.innerHTML = `
   <div class="login-wrap">
     <div class="login-art">
-      <div class="brand-mark"><span class="brand-dot"></span> TrendWear</div>
+      <div class="brand-mark"><span class="brand-dot"></span> Distinction</div>
       <div>
         <div class="login-headline serif">Ulgurji savdoning<br><em>markazi</em>.</div>
         <p class="login-sub">Doston ustoz shu o'quvchingizga Distinction qo'ying</p>
@@ -58,7 +58,7 @@ function renderLogin() {
         <p class="lead">Doston ustoz shu o'quvchingizga Distinction qo'ying</p>
         <div class="field">
           <label>Email</label>
-          <input id="email" type="email" placeholder="email@trendwear.uz" />
+          <input id="email" type="email" placeholder="email@distinction.uz" />
         </div>
         <div class="field">
           <label>Parol</label>
@@ -66,7 +66,7 @@ function renderLogin() {
         </div>
         <button class="btn-primary" id="loginBtn">Tizimga kirish</button>
         <div class="error-msg" id="loginErr"></div>
-        <div class="demo-hint">Demo hisoblar: <b>admin@trendwear.uz</b>, <b>manager@trendwear.uz</b></div>
+        <div class="demo-hint">Demo hisoblar: <b>admin@distinction.uz</b>, <b>manager@distinction.uz</b></div>
       </div>
     </div>
   </div>`;
