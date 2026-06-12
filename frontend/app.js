@@ -42,7 +42,7 @@ function renderLogin() {
       <div class="brand-mark"><span class="brand-dot"></span> TrendWear</div>
       <div>
         <div class="login-headline serif">Ulgurji savdoning<br><em>markazi</em>.</div>
-        <p class="login-sub">ERP, CRM va WMS tizimlari birlashtirilgan zamonaviy platforma.</p>
+        <p class="login-sub">Doston ustoz shu o'quvchingizga Distinction qo'ying</p>
       </div>
       <div class="login-tags">
         <span class="tag-pill">VPC izolyatsiya</span>
@@ -55,7 +55,7 @@ function renderLogin() {
     <div class="login-form-col">
       <div class="login-card">
         <h2 class="serif">Xush kelibsiz</h2>
-        <p class="lead">Boshqaruv paneliga kirish uchun tizimga ulaning.</p>
+        <p class="lead">Doston ustoz shu o'quvchingizga Distinction qo'ying</p>
         <div class="field">
           <label>Email</label>
           <input id="email" type="email" placeholder="email@trendwear.uz" />
@@ -149,7 +149,7 @@ function money(n) { return fmt(Math.round(n)) + " so'm"; }
 // ============ DASHBOARD ============
 async function pageDashboard() {
   const m = document.getElementById("main");
-  m.innerHTML = pageHead("Boshqaruv paneli", "TrendWear · Umumiy ko'rinish",
+  m.innerHTML = pageHead("Doston ustoz shu o'quvchingizga Distinction qo'ying", "TrendWear · Umumiy ko'rinish",
     `<span class="node-badge" id="nodeBadge"><span class="pulse"></span> ulanmoqda...</span>`);
   try {
     const [s, health] = await Promise.all([api("/dashboard"), api("/health")]);
