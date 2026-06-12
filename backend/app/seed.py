@@ -15,13 +15,13 @@ def seed_data(db: Session):
     # --- Foydalanuvchilar ---
     admin = models.User(
         full_name="Abdulloh Admin",
-        email="admin@trendwear.uz",
+        email="admin@distinction.uz",
         hashed_password=hash_password("admin123"),
         role=models.UserRole.admin,
     )
     manager = models.User(
         full_name="Dilshod Manager",
-        email="manager@trendwear.uz",
+        email="manager@distinction.uz",
         hashed_password=hash_password("manager123"),
         role=models.UserRole.manager,
     )
